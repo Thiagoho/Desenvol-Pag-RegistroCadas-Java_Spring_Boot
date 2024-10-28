@@ -17,7 +17,8 @@ public class Registro {
 	
 	@Id
 	private String UserId;
-	private String passaword;
+	private String password;
+
 	
 	
 
