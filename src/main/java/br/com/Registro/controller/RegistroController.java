@@ -27,7 +27,12 @@ public class RegistroController { // HTML
 	public String loginUser(@ModelAttribute("regis") Registro regis) {		
 		String userId=regis.getUserId();
 		Registro userdata=rer.findbyUserId(userId);
-		return "home";
+		if(rer.getPassword().equals(userdata.getPassword())) {
+			return "home";
+		} else {
+			return "error";
+		}
+		
 	}
 
 }
