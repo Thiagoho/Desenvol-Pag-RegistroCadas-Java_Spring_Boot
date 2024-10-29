@@ -7,7 +7,9 @@ import br.com.Registro.entity.Registro;
 
 @Repository
 public interface RegistroRepository extends JpaRepository<Registro, String> {
-	
-	Registro findbyUserId(String userId);
+
+	Registro findByUserId(String userId);
+
+
 
 }

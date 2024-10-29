@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class Registro {
 	
 	@Id
-	private String UserId;
+	private String userId;
+	
 	private String password;
 
 	

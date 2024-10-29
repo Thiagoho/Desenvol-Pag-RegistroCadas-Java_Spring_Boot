@@ -23,11 +23,17 @@ public class RegistroController { // HTML
 		model.addAttribute("regis", regis);
 		return "login";
 	}
+	
+//	@GetMapping("/userLogin")
+//	public String showLoginForm() {
+//		return"login";
+//	}
 	@PostMapping("/userLogin")
 	public String loginUser(@ModelAttribute("regis") Registro regis) {		
 		String userId=regis.getUserId();
-		Registro userdata=rer.findbyUserId(userId);
-		if(rer.getPassword().equals(userdata.getPassword())) {
+		Registro userdata = rer.findByUserId(userId);
+		
+		if(regis.getPassword().equals(userdata.getPassword())) {
 			return "home";
 		} else {
 			return "error";
