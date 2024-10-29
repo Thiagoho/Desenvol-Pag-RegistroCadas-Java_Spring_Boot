@@ -1,5 +1,7 @@
 package br.com.Registro.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,7 @@ import br.com.Registro.repository.RegistroRepository;
 @Controller
 public class RegistroController { // HTML
 	
-	@Autowired
+	@Autowired(required = true)
 	private RegistroRepository rer; 
 	
 	
@@ -31,9 +33,9 @@ public class RegistroController { // HTML
 	@PostMapping("/userLogin")
 	public String loginUser(@ModelAttribute("regis") Registro regis) {		
 		String userId=regis.getUserId();
-		Registro userdata = rer.findByUserId(userId);
+		 Optional<Registro> userdata =rer.findById(userId);
 		
-		if(regis.getPassword().equals(userdata.getPassword())) {
+		if(regis.getPassword().equals(userdata.get().getPassword())) {
 			return "home";
 		} else {
 			return "error";
