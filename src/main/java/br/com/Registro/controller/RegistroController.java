@@ -1,7 +1,5 @@
 package br.com.Registro.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import br.com.Registro.entity.Registro;
 import br.com.Registro.repository.RegistroRepository;
 
+
 @Controller
 public class RegistroController { // HTML
 	
-	@Autowired//(required = true)
+	@Autowired(required = true)
 	private RegistroRepository rer; 
 	
 	
@@ -28,9 +27,12 @@ public class RegistroController { // HTML
 
 	@PostMapping("/userLogin")
 	public String loginUser(@ModelAttribute("regis") Registro regis) {
-		System.out.println(regis.getUserId());
-		System.out.println(regis.getPassword());
-		return "home";
+		String userId=regis.getUserId();
+		Registro userdata =this.rer.findbyUserId(userId);
+		if(userdata != null && regis.getPassword().equals(userdata.getPassword())) {
+			return "home";
+		}else
+			return "error";
 	}
 
 }
