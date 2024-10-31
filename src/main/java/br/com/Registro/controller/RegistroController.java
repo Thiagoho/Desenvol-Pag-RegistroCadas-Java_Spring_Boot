@@ -15,7 +15,7 @@ import br.com.Registro.repository.RegistroRepository;
 @Controller
 public class RegistroController { // HTML
 	
-	@Autowired(required = true)
+	@Autowired//(required = true)
 	private RegistroRepository rer; 
 	
 	
@@ -25,22 +25,12 @@ public class RegistroController { // HTML
 		model.addAttribute("regis", regis);
 		return "login";
 	}
-	
-//	@GetMapping("/userLogin")
-//	public String showLoginForm() {
-//		return"login";
-//	}
+
 	@PostMapping("/userLogin")
-	public String loginUser(@ModelAttribute("regis") Registro regis) {		
-		String userId=regis.getUserId();
-		 Optional<Registro> userdata =rer.findById(userId);
-		
-		if(regis.getPassword().equals(userdata.get().getPassword())) {
-			return "home";
-		} else {
-			return "error";
-		}
-		
+	public String loginUser(@ModelAttribute("regis") Registro regis) {
+		System.out.println(regis.getUserId());
+		System.out.println(regis.getPassword());
+		return "home";
 	}
 
 }

@@ -12,15 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="Registrous")
+@Table(name="registro")
 public class Registro {
 	
 	@Id
 	private String userId;
 	
 	private String password;
-
-	
 	
 
 }
