@@ -1,8 +1,8 @@
 package br.com.Registro.controller;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.Registro.entity.Registro;
-import br.com.Registro.repository.RegistroRepository;
+import br.com.Registro.entity.RespostaModel;
+import br.com.Registro.service.RegistroServic;
 
 
 @Controller
 public class RegistroController { // HTML
 	
 	@Autowired(required = true)
-	private RegistroRepository rer; 
+	private RegistroServic rs; 
 	
 	
 	@GetMapping("/")
@@ -28,14 +29,19 @@ public class RegistroController { // HTML
 	}
 
 	@PostMapping("/userLogin")
-	public String loginUser(@ModelAttribute("regis") Registro regis) {
-		String userId=regis.getUserId();
-		Optional<Registro> userdata =rer.findById(userId);
+	public String loginUser(@ModelAttribute("regis") Registro regis, Model model) {
+		ResponseEntity<?> response = rs.loginUser(regis);
 		
-		if(regis.getPassword().equals(userdata.get().getPassword())) {
-			return "home";
-		}else
-			return "error";
+		if(response.getStatusCode().is2xxSuccessful()) {
+		RespostaModel resposta = (RespostaModel) response.getBody();
+		model.addAttribute("mensagem", resposta.getMensagem());
+		return "home";
+	} else {
+		RespostaModel resposta = (RespostaModel) response.getBody();
+		model.addAttribute("mensagem", resposta.getMensagem());
+		return "error";
+		
 	}
 
+	}
 }
